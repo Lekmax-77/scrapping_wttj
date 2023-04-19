@@ -100,6 +100,7 @@ def main():
     else:  # option "all"
         delai = None  # ou un grand nombre de jours pour récupérer toutes les données
     date_actuelle = datetime.now()
+    print(date + " " + delai.__str__(), file=sys.stderr)
     if delai is not None:
         date_precedente = date_actuelle - timedelta(days=delai)
     data_of_get_url = []
