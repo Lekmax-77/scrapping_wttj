@@ -1,2 +1,3 @@
 selenium
-werbdriver-manager
+webdriver-manager
+smtplib

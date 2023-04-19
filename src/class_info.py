@@ -1,5 +1,5 @@
 ##
-## EPITECH PROJECT, 2023
+## MALEK PROJECT, 2023
 ## scrapping_wttj
 ## File description:
 ## class_info
