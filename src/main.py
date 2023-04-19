@@ -23,7 +23,7 @@ def setup_driver(link, headless_mode):
     # setup all driver settings
     s = Service(ChromeDriverManager().install())
     chrome_options = Options()
-    if headless_mode == "True":
+    if headless_mode == "False":
         chrome_options.add_argument('--headless=new')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
