@@ -43,7 +43,7 @@ def manage_arguments():
     parser.add_argument('-t', '--type', default='json', choices=['json', 'csv'], help='type of the output')
     parser.add_argument('-f', '--format', default='print', choices=['print', 'file'], help='format of the output')
     parser.add_argument('-w', '--windowless', default='False', choices=['False', 'True'], help='window mode (default: False)')
-    parser.add_argument('-m', '--mail',  help='the mail will receive the crash status of the bot', required=True)
+    parser.add_argument('-m', '--mail',  help='the mail will receive the crash status of the bot')
     
     # Analyser les arguments
     args = parser.parse_args()
@@ -60,6 +60,8 @@ def main():
     # name of the file
     name_of_the_file = "scrappin_data_of_wttj_" + args.name + "_of_" + args.date + "_" + datetime.now().strftime("%d-%m-%Y-%H-%M")
     
+    if not args.mail:
+        args.mail = None
     # loop in the list of url
     data_of_get_url = loop_in_list_of_url(driver, args.mail, args.date)
     
@@ -74,13 +76,13 @@ def main():
                 json.dump(data, f)
     elif args.type == "csv":
         if args.format == "print":
-            print(";".join(info.__dict__.keys()))
+            print(";".join(data_of_get_url.__dict__.keys()))
             for p in data_of_get_url:
                 print(";".join(p.__dict__.values()))
         elif args.format == "file":
             with open(name_of_the_file + ".csv", 'w') as f:
                 writer = csv.writer(f)
-                writer.writerow(info.__dict__.keys())
+                writer.writerow(data_of_get_url.__dict__.keys())
                 for p in data_of_get_url:
                     writer.writerow(p.__dict__.values())
 

@@ -70,7 +70,10 @@ def loop_in_list_of_url(driver, mail, date):
             try:
                 data_of_get_url.append(get_info_from_url(driver, list_of_element[i - 1][0], list_of_element[i - 1][1]))
             except Exception as e:
-                send_crash(mail, "error in get_info_from_url(" + e.__str__() + ")")
+                if mail is not None:
+                    send_crash(mail, "error in get_info_from_url(" + e.__str__() + ")")
+                else:
+                    print("Une erreur s'est produite!(" + e.__str__() + ")\n", file=sys.stderr)
                 exit(84) 
     return data_of_get_url
     # manage the name of the file
