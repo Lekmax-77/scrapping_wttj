@@ -29,9 +29,9 @@ def get_info_from_url(driver, url, date) -> info:
         except:
             pass
     _info.job_description = driver.find_element(By.ID, "description-section").text
-    _info.company_name = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/div/div/main/div/div/div[1]/div[1]/a/h4").text
+    _info.company_name = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/div/div/main/div[1]/div/div/div[1]/div[1]/a/h4").text
     _info.company_logo = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/div/div/main/section/div/a/div/figure/img").get_attribute("src")
-    _info.company_staff_count = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/div/div/main/div/div/div[1]/div[1]/ul/li[2]/span[2]").text
+    _info.company_staff_count = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/div/div/main/div[1]/div/div/div[1]/div[1]/ul/li[2]/span[2]").text
     _info.company_description = driver.find_element(By.ID, "about-section").text
     driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/div/div/main/section/div/a").click()
     sleep(1)
