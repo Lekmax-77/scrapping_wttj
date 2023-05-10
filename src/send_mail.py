@@ -11,6 +11,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import formatdate
 
+
 def send_crash(email, text):
     msg = MIMEMultipart()
     msg['From'] = "jean-marie.scofield@outlook.com"

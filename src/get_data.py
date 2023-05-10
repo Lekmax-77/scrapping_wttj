@@ -34,34 +34,39 @@ def convert_str_to_delai(date):
 def loop_in_list_of_url(driver, mail, date):
     # this while loop is to scroll down the page to load all the jobs
     list_of_element = []
-    y = 0
+    nb_next_page = 1
+    page = driver.find_elements(By.CLASS_NAME, "sc-dOpmdR")
+    nb_page = len(page) - 2
     while True:
-        for i in range(1, len(driver.find_elements(By.CLASS_NAME, "sc-1peil1v-5")) + 1):
-            xpath_to_search_one = "/html/body/div[1]/div[1]/div/div/div/div/div/div[3]/div/ol/div[" + i.__str__() + "]/li/article/div[1]/a"
+        for i in range(1, len(driver.find_elements(By.CLASS_NAME, "sc-kZwcoV")) + 1):
+            print("position i: " + i.__str__() + "\n", file=sys.stderr)
+            xpath_to_search_one = "/html/body/div[1]/div[1]/div/div/div/div[2]/div/ol/div[" + i.__str__() + "]/li/div/div/div[2]/a"
             try:
-                xpath_to_index_liste = "/html/body/div[1]/div[1]/div/div/div/div/div/div[3]/div/ol/div[" + i.__str__() + "]/li/article/div[2]/header/ul"
-                index_to_liste = (len(driver.find_element(By.XPATH, xpath_to_index_liste).find_elements(By.TAG_NAME, "li")) - 0).__str__()
-                xpath_to_search = "/html/body/div[1]/div[1]/div/div/div/div/div/div[3]/div/ol/div[" + i.__str__() + "]/li/article/div[2]/header/ul/li[" + index_to_liste  + "]/span[2]/time"
-                result_date = (driver.find_element(By.XPATH, xpath_to_search).get_attribute("datetime").split("T")[0])# .find_element(By.TAG_NAME, "time").
+                xpath_to_search = "/html/body/div[1]/div[1]/div/div/div/div[2]/div/ol/div[" + i.__str__() +\
+                                  "]/li/div/div/div[2]/div[3]/div[1]/p/time"
+                result_date = (driver.find_element(By.XPATH, xpath_to_search).get_attribute("datetime").split("T")[0])
                 result_url = (driver.find_element(By.XPATH, xpath_to_search_one).get_attribute("href"))
                 list_of_element.append((result_url, result_date))
             except Exception as e:
                 print("Une erreur s'est produite!(" + e.__str__() + ")\n", file=sys.stderr)
-        if y >= (len(driver.find_elements(By.CLASS_NAME, "sc-bwsPYA")) - 3):
+        # input("Appuyez sur entrée pour continuer...")
+        nb_next_page += 1
+        if nb_next_page > nb_page:
             break
-        driver.find_elements(By.CLASS_NAME, "sc-bwsPYA")[len(driver.find_elements(By.CLASS_NAME, "sc-bwsPYA"))- 1].click()
+        page[nb_next_page].click()
         sleep(1)
-        
-        
+    print("Nombre d'offres trouvées: " + str(len(list_of_element)) + "\n", file=sys.stderr)
+    input("Appuyez sur entrée pour continuer...")
     
     # get the info from the url and put it in a list
     delai = convert_str_to_delai(date)
+    print("flags")
     date_actuelle = datetime.now()
+    date_precedente = None
     if delai is not None:
         date_precedente = date_actuelle - timedelta(days=delai)
     data_of_get_url = []
-    
-    
+
     for i in range(len(list_of_element)):
         print(i.__str__() + "/" + str(len(list_of_element)) , file=sys.stderr)
         print(list_of_element[i - 1][0], file=sys.stderr)
