@@ -55,8 +55,6 @@ def loop_in_list_of_url(driver, mail, date):
             break
         page[nb_next_page].click()
         sleep(1)
-    print("Nombre d'offres trouvées: " + str(len(list_of_element)) + "\n", file=sys.stderr)
-    input("Appuyez sur entrée pour continuer...")
     
     # get the info from the url and put it in a list
     delai = convert_str_to_delai(date)
