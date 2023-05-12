@@ -17,7 +17,7 @@ def get_info_from_url(driver, url, date) -> info:
     _info.job_published_at = date
     _info.job_name = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/div/div/main/section/div/h1").text
     _info.job_contract = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/div/div/main/section/div/ul/li[1]/span[2]/span").text
-    for one in driver.find_elements(By.CLASS_NAME, "sc-16yjgsd-0"):
+    for one in driver.find_elements(By.CLASS_NAME, "k2ldby-0"):
         try:
             one.find_element(By.NAME, "location")
             _info.job_location = one.find_element(By.CLASS_NAME, "wui-text").text
@@ -35,7 +35,7 @@ def get_info_from_url(driver, url, date) -> info:
     _info.company_description = driver.find_element(By.ID, "about-section").text
     driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/div/div/main/section/div/a").click()
     sleep(1)
-    for one in driver.find_elements(By.CLASS_NAME, "sc-16yjgsd-0"):
+    for one in driver.find_elements(By.CLASS_NAME, "k2ldby-0"):
         try:
             one.find_element(By.NAME, "earth")
             _info.company_domain = one.find_elements(By.TAG_NAME, "span")[1].find_element(By.TAG_NAME, "a").get_attribute("href")
@@ -44,7 +44,7 @@ def get_info_from_url(driver, url, date) -> info:
             pass
     try:
 
-        tempo_2 = driver.find_element(By.CLASS_NAME, "sc-1j9pq7a-4").find_elements(By.TAG_NAME, "a")
+        tempo_2 = driver.find_element(By.CLASS_NAME, "sc-16kqxrj-4").find_elements(By.TAG_NAME, "a")
         for one in tempo_2:
             if "linkedin" in one.get_attribute("href"):
                 _info.company_linkedin_url = one.get_attribute("href")
@@ -53,12 +53,22 @@ def get_info_from_url(driver, url, date) -> info:
         _info.company_linkedin_url= "None"
     _info.company_industry = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/div/main/section/div/header/div/ul/li[1]/span[2]").text
     _info.company_address = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/div/main/section/div/header/div/ul/li[2]/span[2]").text
-    driver.get(driver.current_url + "/tech-1")
+    save_url = driver.current_url
+    driver.get(driver.current_url + "/tech")
     sleep(0.5)
-    temps = driver.find_elements(By.CLASS_NAME, "sc-17029wj-4")
+    temps = driver.find_elements(By.CLASS_NAME, "f9afj1-0")
     for one in temps:
         _info.company_tools += one.text
         if one != temps[-1]:
             _info.company_tools += ", "
+    driver.get(save_url + "/jobs")
+    sleep(0.5)
+    all_jobs = driver.find_elements(By.CLASS_NAME, "sc-1peil1v-4")
+    for one in all_jobs:
+        _info.company_jobs += one.text
+        if one != all_jobs[-1]:
+            _info.company_jobs += ", "
+    _info.company_nb_of_jobs = len(all_jobs)
+
     return _info
 

@@ -76,15 +76,15 @@ def main():
                 json.dump(data, f)
     elif args.type == "csv":
         if args.format == "print":
-            print(";".join(data_of_get_url.__dict__.keys()))
+            print(";".join(data_of_get_url[0].get_name_of_all_attributes()))
             for p in data_of_get_url:
-                print(";".join(p.__dict__.values()))
+                print(";".join(p.get_list()))
         elif args.format == "file":
             with open(name_of_the_file + ".csv", 'w') as f:
                 writer = csv.writer(f)
-                writer.writerow(data_of_get_url.__dict__.keys())
+                writer.writerow(data_of_get_url[0].get_name_of_all_attributes())
                 for p in data_of_get_url:
-                    writer.writerow(p.__dict__.values())
+                    writer.writerow(p.get_list())
 
 
 if __name__ == '__main__':

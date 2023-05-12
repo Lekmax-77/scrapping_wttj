@@ -37,9 +37,10 @@ def loop_in_list_of_url(driver, mail, date):
     nb_next_page = 1
     page = driver.find_elements(By.CLASS_NAME, "sc-dOpmdR")
     nb_page = len(page) - 2
+    count = 0 # TODO to delete
     while True:
         for i in range(1, len(driver.find_elements(By.CLASS_NAME, "sc-kZwcoV")) + 1):
-            print("position i: " + i.__str__() + "\n", file=sys.stderr)
+
             xpath_to_search_one = "/html/body/div[1]/div[1]/div/div/div/div[2]/div/ol/div[" + i.__str__() + "]/li/div/div/div[2]/a"
             try:
                 xpath_to_search = "/html/body/div[1]/div[1]/div/div/div/div[2]/div/ol/div[" + i.__str__() +\
@@ -47,6 +48,7 @@ def loop_in_list_of_url(driver, mail, date):
                 result_date = (driver.find_element(By.XPATH, xpath_to_search).get_attribute("datetime").split("T")[0])
                 result_url = (driver.find_element(By.XPATH, xpath_to_search_one).get_attribute("href"))
                 list_of_element.append((result_url, result_date))
+
             except Exception as e:
                 print("Une erreur s'est produite!(" + e.__str__() + ")\n", file=sys.stderr)
         # input("Appuyez sur entrée pour continuer...")
@@ -58,7 +60,6 @@ def loop_in_list_of_url(driver, mail, date):
     
     # get the info from the url and put it in a list
     delai = convert_str_to_delai(date)
-    print("flags")
     date_actuelle = datetime.now()
     date_precedente = None
     if delai is not None:
@@ -66,12 +67,15 @@ def loop_in_list_of_url(driver, mail, date):
     data_of_get_url = []
 
     for i in range(len(list_of_element)):
-        print(i.__str__() + "/" + str(len(list_of_element)) , file=sys.stderr)
-        print(list_of_element[i - 1][0], file=sys.stderr)
+        if count == 10:
+            break
+        print(i.__str__() + "/" + str(len(list_of_element)), file=sys.stderr)
         date_of_job = datetime.strptime(list_of_element[i - 1][1], "%Y-%m-%d")
         if delai is None or date_of_job >= date_precedente:
             try:
                 data_of_get_url.append(get_info_from_url(driver, list_of_element[i - 1][0], list_of_element[i - 1][1]))
+                print("is append nb " + i.__str__() + "/" + len(list_of_element).__str__(), file=sys.stderr)
+                count += 1
             except Exception as e:
                 if mail is not None:
                     send_crash(mail, "error in get_info_from_url(" + e.__str__() + ")")
