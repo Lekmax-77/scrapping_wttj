@@ -50,7 +50,7 @@ def get_info_from_url(driver, url, date) -> info:
     sleep(1)
     try:
         _info.company_staff_count = driver.find_element(By.XPATH,
-            r                                            "/html/body/div[1]/div[1]/div/div/div/main/div/div/section/div[1]/div[1]/div/div[4]/div/div/article/div/ul/li[2]/span").text
+                                                        "/html/body/div[1]/div[1]/div/div/div/main/div/div/section/div[1]/div[1]/div/div[4]/div/div/article/div/ul/li[2]/span").text
     except:
         pass
     for one in driver.find_elements(By.CLASS_NAME, "k2ldby-0"):
