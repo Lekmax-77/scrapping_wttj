@@ -21,8 +21,8 @@ import os
 def setup_driver(link, headless_mode):
     # setup all driver settings
     s = Service(ChromeDriverManager().install())
-    print(os.path.abspath('./chromedriver'))
-    s = Service(os.path.abspath('./chromedriver'))
+    # print(os.path.abspath('./chromedriver'))
+    # s = Service(os.path.abspath('./chromedriver'))
     chrome_options = Options()
     if headless_mode == "False":
         chrome_options.add_argument('--headless=new')
