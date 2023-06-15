@@ -15,11 +15,14 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import argparse
 from get_data import loop_in_list_of_url
+import os
 
 
 def setup_driver(link, headless_mode):
     # setup all driver settings
     s = Service(ChromeDriverManager().install())
+    print(os.path.abspath('./chromedriver'))
+    s = Service(os.path.abspath('./chromedriver'))
     chrome_options = Options()
     if headless_mode == "False":
         chrome_options.add_argument('--headless=new')
@@ -64,7 +67,6 @@ def main():
         args.mail = None
     # loop in the list of url
     data_of_get_url = loop_in_list_of_url(driver, args.mail, args.date)
-    
     # manage the output
     if args.type == "json":
         data = {"job": [p.__dict__ for p in data_of_get_url]}

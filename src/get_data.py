@@ -33,25 +33,28 @@ def convert_str_to_delai(date):
 
 def loop_in_list_of_url(driver, mail, date):
     # this while loop is to scroll down the page to load all the jobs
+    
+    class_element_of_job_box = "sc-eywEdf"
+    class_element_of_page = "sc-1qf12yi-2"
+    
+    
     list_of_element = []
     nb_next_page = 1
-    page = driver.find_elements(By.CLASS_NAME, "sc-dOpmdR")
+    page = driver.find_elements(By.CLASS_NAME, class_element_of_page)
     nb_page = len(page) - 2
     count = 0 # TODO to delete
     while True:
-        for i in range(1, len(driver.find_elements(By.CLASS_NAME, "sc-kZwcoV")) + 1):
-
+        for i in range(1, len(driver.find_elements(By.CLASS_NAME, class_element_of_job_box)) + 1):
+            print(i, "/", len(driver.find_elements(By.CLASS_NAME, class_element_of_job_box)), file=sys.stderr)
             xpath_to_search_one = "/html/body/div[1]/div[1]/div/div/div/div[2]/div/ol/div[" + i.__str__() + "]/li/div/div/div[2]/a"
             try:
-                xpath_to_search = "/html/body/div[1]/div[1]/div/div/div/div[2]/div/ol/div[" + i.__str__() +\
-                                  "]/li/div/div/div[2]/div[3]/div[1]/p/time"
+                xpath_to_search = "/html/body/div[1]/div[1]/div/div/div/div[2]/div/ol/div[" + i.__str__() + "]/li/div/div/div[2]/div[3]/div[1]/p/time"
                 result_date = (driver.find_element(By.XPATH, xpath_to_search).get_attribute("datetime").split("T")[0])
                 result_url = (driver.find_element(By.XPATH, xpath_to_search_one).get_attribute("href"))
                 list_of_element.append((result_url, result_date))
 
             except Exception as e:
                 print("Une erreur s'est produite!(" + e.__str__() + ")\n", file=sys.stderr)
-        # input("Appuyez sur entrée pour continuer...")
         nb_next_page += 1
         if nb_next_page > nb_page:
             break
