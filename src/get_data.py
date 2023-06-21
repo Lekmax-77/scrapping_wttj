@@ -33,11 +33,8 @@ def convert_str_to_delai(date):
 
 def loop_in_list_of_url(driver, mail, date):
     # this while loop is to scroll down the page to load all the jobs
-    
-    class_element_of_job_box = "sc-eywEdf"
-    class_element_of_page = "sc-1qf12yi-2"
-    
-    
+    class_element_of_job_box = "iiwBSR"
+    class_element_of_page = "sc-cXPBUD"
     list_of_element = []
     nb_next_page = 1
     page = driver.find_elements(By.CLASS_NAME, class_element_of_page)
