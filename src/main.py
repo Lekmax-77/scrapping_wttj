@@ -41,7 +41,7 @@ def main():
     driver = setup_driver(args.link, args.windowless)
 
     # name of the file
-    name_of_the_file = "scrappin_data_of_wttj_" + args.name + "_of_" + args.date + "_" +\
+    name_of_the_file = "scrapping_data_of_wttj_" + args.name + "_of_" + args.date + "_" +\
                        datetime.now().strftime("%d-%m-%Y-%H-%M")
     
     if not args.mail:

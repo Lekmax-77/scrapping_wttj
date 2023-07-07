@@ -2,3 +2,4 @@ archive/
 venv/
 src/__pycache__/
 .idea/
+scrapping_data_*

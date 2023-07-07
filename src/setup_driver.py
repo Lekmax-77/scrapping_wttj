@@ -16,7 +16,7 @@ import os
 def setup_driver(link, headless_mode):
     # setup all driver settings
     path = ChromeDriverManager().install()
-    os.environ['PATH'] = path + os.pathsep + os.environ['PATH']
+    os.environ['PATH'] += os.pathsep + path
     print(path)
     print(os.environ['PATH'])
     s = Service(path)
